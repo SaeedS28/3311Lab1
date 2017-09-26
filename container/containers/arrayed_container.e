@@ -53,8 +53,28 @@ feature -- Commands
 			-- Insert value 's' into index 'i'.
 		require
 			valid_index: valid_index(i)
+		local
+			n : INTEGER
+			str_at: STRING
+			--str_before: STRING
 		do
-			imp.force (s, i)
+			if i>imp.count then
+				imp.force (s, i)
+			else
+				imp.force ("Fuck", imp.count + 1)
+				from
+					n:=imp.count
+				until
+					n=i
+				loop
+					str_at:=imp[n]
+					--imp.force (str_at, n)
+					imp[n]:=imp[n-1]
+					n:=n-1
+				end
+				imp.put (s, i)
+
+			end
 		ensure
 			size_changed: imp.count = (old imp.twin).count+1
 			inserted_at_i:imp[i]~s
@@ -66,9 +86,9 @@ feature -- Commands
 			end
 			right_half_the_same:
 			across
-				i |..| (old imp.twin).upper as j
+				i |..| (old imp.twin).upper as k
 			all
-				imp[j.item+1]~(old imp.twin)[j.item]
+				imp[k.item+1]~(old imp.twin)[k.item]
 			end
 		end
 
@@ -114,13 +134,14 @@ feature -- Commands
 			temp_str2 : STRING
 		do --swaps the last and 2nd last entries because force at end pushes the element out by 1
 			imp.force(s,imp.upper+1)
+
 --			imp.force (s,imp.count)
 --			temp_str:=imp[imp.count]
 --			temp_str2:=imp[imp.count-1]
 --			imp.put (temp_str, imp.count)
 --			imp.put (temp_str2, imp.count-1)
 		ensure
-			size_changed:imp.count=(old imp.twin).count+1
+			size_changed:count=(old imp.twin).count+1
 			last_inserted:imp[imp.upper]~s
 			others_unchanged:
 			across

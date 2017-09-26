@@ -20,8 +20,9 @@ feature--constructor
 	make
 	do
 		add_boolean_case (agent test_insert_last) --done
-		add_boolean_case (agent test_count)
-		add_boolean_case (agent test_insert_at)
+		add_boolean_case (agent test_count) --done
+		add_boolean_case (agent test_insert_at) --done
+		add_boolean_case (agent test_remove_first)
 	end
 
 
@@ -65,7 +66,7 @@ feature --initialization
 		a: STRING
 		imp_client: ARRAYED_CONTAINER
 	do	--Spaces screw it up
-		comment("TEST 1: insert_at")
+		comment("TEST 3: insert_at")
 		create imp_client.make
 		imp_client.insert_last("Saad")
 
@@ -74,6 +75,34 @@ feature --initialization
 		a:=imp_client.get_at(1)
 		result := a~"Memes"
 		check result end
+		imp_client.insert_at(1,"Dank")
+		a:=imp_client.get_at(1)
+		result := a~"Dank"
+		check result end
+		a:=imp_client.get_at(2)
+		result := a~"Memes"
+		check result end
+	end
+
+	test_remove_first : BOOLEAN
+	local
+		imp_client : ARRAYED_CONTAINER
+	do
+		create imp_client.make
+		comment("TEST 4: remove_first")
+	--	create imp_client.make
+		imp_client.insert_last("Saad")
+		imp_client.insert_last("Saeed")
+		imp_client.insert_last("Memes")
+
+		imp_client.remove_first
+		result:= imp_client.count=2
+
+		check result end
+
+		--actual testing body
+
+
 	end
 
 end

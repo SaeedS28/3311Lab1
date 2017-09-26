@@ -154,13 +154,23 @@ feature -- Commands
 	remove_first
 			-- Remove first element from the container.
 		require
-			not_empty: count>0
---		local
---			i: INTEGER
+			not_empty: count /= 0
+		local
+			i: INTEGER
 --			s: STRING
 
 		do
-			imp.remove_head(1)
+			--imp.remove_head(1)
+			from
+				i:=imp.lower+1
+			until
+				i=imp.count+1
+			loop
+				imp[i-1]:=imp[i]	--rewrites the first value
+				i:=i+1
+			end
+			imp.remove_tail (1)
+
 		ensure
 			size_changed: imp.count=(old imp.count)-1
 			others_unchanged:
@@ -198,7 +208,6 @@ feature -- Queries
 
 	get_at (i: INTEGER): STRING
 			-- Return the element stored at index 'i'.
-
 		require
 			valid_index: valid_index(i)
 		do

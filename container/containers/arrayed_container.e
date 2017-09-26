@@ -113,11 +113,12 @@ feature -- Commands
 			temp_str : STRING
 			temp_str2 : STRING
 		do --swaps the last and 2nd last entries because force at end pushes the element out by 1
-			imp.force (s,imp.count)
-			temp_str:=imp[imp.count]
-			temp_str2:=imp[imp.count-1]
-			imp.put (temp_str, imp.count)
-			imp.put (temp_str2, imp.count-1)
+			imp.force(s,imp.upper+1)
+--			imp.force (s,imp.count)
+--			temp_str:=imp[imp.count]
+--			temp_str2:=imp[imp.count-1]
+--			imp.put (temp_str, imp.count)
+--			imp.put (temp_str2, imp.count-1)
 		ensure
 			size_changed:imp.count=(old imp.twin).count+1
 			last_inserted:imp[imp.upper]~s

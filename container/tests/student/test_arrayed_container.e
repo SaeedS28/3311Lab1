@@ -14,22 +14,29 @@ create
 	make
 
 feature -- Attributes
-	imp_client : ARRAY[STRING]
+	imp_client : ARRAYED_CONTAINER
 
 feature--constructor
 	make
 	do
-
+		create imp_client.make
+		add_boolean_case (agent test_insert_last)
 	end
 
 
 feature --initialization
-	initialization
+	test_insert_last: BOOLEAN
+	local
+		a: STRING
 	do
-
-		comment("TEST 0: Intialization")
-		create {} imp_client.make_empty
-		imp_client("Saad",1)
+		comment("TEST 1: insert last")
+		imp_client.insert_last("Saad")
+		a:=imp_client.get_at(1)
+		result:= a~"Saad"
+		check result end
+		imp_client.insert_last("Memes")
+		a:=imp_client.get_at(2)
+		result := a~"Memes"
 	end
 
 

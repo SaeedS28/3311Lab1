@@ -23,11 +23,12 @@ feature--constructor
 		add_boolean_case (agent test_count) --done
 		add_boolean_case (agent test_insert_at) --done
 		add_boolean_case (agent test_remove_first) --done
-		--add_boolean_case (agent test_delete_at) Does not work
+		add_boolean_case (agent test_delete_at)
 		add_boolean_case (agent test_assign_at)
 		add_violation_case_with_tag ("last_inserted", agent test_insert_last_post_fail_1)
 		add_violation_case_with_tag ("inserted_at_i", agent test_insert_at_post_fail_1)
 		add_violation_case_with_tag ("others_unchanged", agent test_remove_first_post_fail_1)
+		add_violation_case_with_tag ("right_half_the_same", agent test_delete_at_post_fail_1)
 	end
 
 
@@ -174,5 +175,18 @@ feature--Post-Condition Violations
 		imp_client.insert_last ("an")
 		imp_client.insert_last ("ass")
 		imp_client.remove_first
+	end
+
+	test_delete_at_post_fail_1
+	local
+		imp_client: BAD_DELETE_AT
+	do
+		comment ("Post Condition fail 1: delete_at")
+		create imp_client.make
+		imp_client.insert_last ("Saad")
+		imp_client.insert_last ("is")
+		imp_client.insert_last ("an")
+		imp_client.insert_last ("ass")
+		imp_client.delete_at (3)
 	end
 end

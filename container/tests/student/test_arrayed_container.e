@@ -25,7 +25,9 @@ feature--constructor
 		add_boolean_case (agent test_remove_first) --done
 		--add_boolean_case (agent test_delete_at) Does not work
 		add_boolean_case (agent test_assign_at)
-
+		add_violation_case_with_tag ("last_inserted", agent test_insert_last_post_fail_1)
+		add_violation_case_with_tag ("inserted_at_i", agent test_insert_at_post_fail_1)
+		add_violation_case_with_tag ("others_unchanged", agent test_remove_first_post_fail_1)
 	end
 
 
@@ -138,5 +140,39 @@ feature --initialization
 		imp_client.assign_at (1, "Savage")
 		result:= imp_client.count=3 and imp_client.get_at (1)~"Savage" and imp_client.get_at (2)~"Saeed" and imp_client.get_at(3)~"Dank"
 		check result end
+	end
+
+feature--Post-Condition Violations
+	test_insert_last_post_fail_1
+	local
+		imp_client: BAD_ARRAYED_CONTAINER
+	do
+		comment ("Post Condition fail 1: insert_last")
+		create imp_client.make
+		imp_client.insert_last ("Saad")
+
+	end
+
+	test_insert_at_post_fail_1
+	local
+		imp_client: BAD_INSERT_AT
+	do
+		comment ("Post Condition fail 1: insert_at")
+		create imp_client.make
+		imp_client.insert_last ("Saad")
+		imp_client.insert_at (1, "Eiffel")
+	end
+
+	test_remove_first_post_fail_1
+	local
+		imp_client: BAD_REMOVE_FIRST
+	do
+		comment ("Post Condition fail 1: remove_first")
+		create imp_client.make
+		imp_client.insert_last ("Saad")
+		imp_client.insert_last ("is")
+		imp_client.insert_last ("an")
+		imp_client.insert_last ("ass")
+		imp_client.remove_first
 	end
 end

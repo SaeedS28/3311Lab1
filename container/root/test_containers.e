@@ -17,7 +17,7 @@ feature -- Adding test classes.
 	make
 			-- Run application.
 		local
-		--	ac: ARRAYED_CONTAINER
+			--ac: ARRAYED_CONTAINER
 		do
 			add_test (create {TEST_ARRAYED_CONTAINER}.make)
 

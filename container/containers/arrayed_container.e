@@ -124,9 +124,9 @@ feature -- Commands
 			end
 			right_half_the_same:
 			across
-				(i+1) |..| (old imp.twin).upper as j
+				(i) |..| (old imp.twin).upper as j
 			all
-				imp[j.item]~(old imp.twin)[j.item-1]
+				imp[j.item]~(old imp.twin)[j.item+1]
 			end
 		end
 

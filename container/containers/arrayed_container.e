@@ -99,17 +99,20 @@ feature -- Commands
 			valid_index: valid_index(i)
 		local
 			str_ahead : STRING
+			n:INTEGER
 		do
 			if i=imp.count	then
 				imp.remove_tail (1)
 			else
-				across
-					i |..| (imp.upper-1) as j
+				from
+					n:=i+1
+				until
+					n=imp.count+1
 				loop
-					str_ahead :=imp[j.item+1]
-					imp.put (str_ahead,j.item)
+					imp[n-1]:=imp[n]
+					n:=n+1
 				end
-				imp.remove_tail (1)
+				imp.remove_tail(1)
 			end
 		ensure
 			size_changed: imp.count=(old imp.twin).count-1
@@ -121,9 +124,9 @@ feature -- Commands
 			end
 			right_half_the_same:
 			across
-				i |..| (old imp.twin).upper as j
+				(i+1) |..| (old imp.twin).upper as j
 			all
-				imp[j.item-1]~(old imp.twin)[j.item]
+				imp[j.item]~(old imp.twin)[j.item-1]
 			end
 		end
 

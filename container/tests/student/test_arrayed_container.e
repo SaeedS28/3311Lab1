@@ -22,7 +22,10 @@ feature--constructor
 		add_boolean_case (agent test_insert_last) --done
 		add_boolean_case (agent test_count) --done
 		add_boolean_case (agent test_insert_at) --done
-		add_boolean_case (agent test_remove_first)
+		add_boolean_case (agent test_remove_first) --done
+		--add_boolean_case (agent test_delete_at) Does not work
+		add_boolean_case (agent test_assign_at)
+
 	end
 
 
@@ -96,13 +99,44 @@ feature --initialization
 		imp_client.insert_last("Memes")
 
 		imp_client.remove_first
-		result:= imp_client.count=2
+		result:= imp_client.count=2 and imp_client.get_at (1)~"Saeed" and imp_client.get_at (2)~"Memes"
 
 		check result end
 
 		--actual testing body
-
+		imp_client.remove_first
+		result:= imp_client.count=1 and imp_client.get_at (1)~"Memes"
 
 	end
 
+	test_delete_at : BOOLEAN
+	local
+		imp_client : ARRAYED_CONTAINER
+	do
+		comment("TEST 5: delete_at")
+		create imp_client.make
+		imp_client.insert_last("Saad")
+		imp_client.insert_last("Saeed")
+		imp_client.insert_last("Memes")
+
+		imp_client.delete_at(2)
+		result:= imp_client.count=2 and imp_client.get_at (1)~"Saad" and imp_client.get_at (2)~"Memes"
+	end
+
+	test_assign_at : BOOLEAN
+	local
+		imp_client : ARRAYED_CONTAINER
+	do
+		comment("TEST 6: assign_at")
+		create imp_client.make
+		imp_client.insert_last("Saad")
+		imp_client.insert_last("Saeed")
+		imp_client.insert_last("Memes")
+		imp_client.assign_at (3, "Dank")
+		result:= imp_client.count=3 and imp_client.get_at (1)~"Saad" and imp_client.get_at (2)~"Saeed" and imp_client.get_at(3)~"Dank"
+		check result end
+		imp_client.assign_at (1, "Savage")
+		result:= imp_client.count=3 and imp_client.get_at (1)~"Savage" and imp_client.get_at (2)~"Saeed" and imp_client.get_at(3)~"Dank"
+		check result end
+	end
 end

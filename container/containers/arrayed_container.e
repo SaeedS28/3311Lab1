@@ -1,6 +1,6 @@
 note
 	description: "A linear container implemented via an array."
-	author: "Jackie and You"
+	author: "Jackie and Saad"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -41,7 +41,7 @@ feature -- Commands
 		ensure
 			size_unchanged: imp.count = (old imp.twin).count
 			item_assigned: imp [i] ~ s
-			others_unchanged:
+			others_unchanged:	--loops through the array and checks to make sure the arrays elements match
 				across
 					1 |..| imp.count as j
 				all
@@ -73,7 +73,7 @@ feature -- Commands
 					n:=n-1
 				end
 				imp.put (s, i)
-
+				--loops throught the array after forcing the end index and pushing the array elements right by one. Afterwards, put the element at index i
 			end
 		ensure
 			size_changed: imp.count = (old imp.twin).count+1
@@ -135,7 +135,7 @@ feature -- Commands
 		local
 			temp_str : STRING
 			temp_str2 : STRING
-		do --swaps the last and 2nd last entries because force at end pushes the element out by 1
+		do --forces the array element by one and increasing the size by 1.
 			imp.force(s,imp.upper+1)
 
 --			imp.force (s,imp.count)
@@ -173,7 +173,7 @@ feature -- Commands
 				i:=i+1
 			end
 			imp.remove_tail (1)
-
+			--shifts the array elements to the left by one and then deletes the tail.
 		ensure
 			size_changed: imp.count=(old imp.count)-1
 			others_unchanged:
@@ -186,7 +186,7 @@ feature -- Commands
 
 feature -- Queries
 
-	count: INTEGER -- Your task
+	count: INTEGER -- gets the number of elements in the array by calculating it using a formula
 	 do
 	 	Result:= imp.upper-imp.lower+1
 	 ensure

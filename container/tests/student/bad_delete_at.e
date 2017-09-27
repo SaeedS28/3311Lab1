@@ -1,6 +1,6 @@
 note
-	description: "Summary description for {BAD_ARRAYED_CONTAINER}."
-	author: ""
+	description: "This class implements the delete_at method in such a way that it violates the postcondition"
+	author: "Saad Saeed"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -19,7 +19,7 @@ feature -- bad versions of the methods that throw a post-condition violation
 	delete_at (i: INTEGER)
 	do
 		Precursor (i)
-		imp[imp.count]:="WTF"
+		imp[imp.count]:="WTF"	--The line of code that violates the test condition
 	end
 
 end

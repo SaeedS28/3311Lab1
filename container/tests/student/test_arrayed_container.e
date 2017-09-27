@@ -124,6 +124,10 @@ feature --initialization
 
 		imp_client.delete_at(2)
 		result:= imp_client.count=2 and imp_client.get_at (1)~"Saad" and imp_client.get_at (2)~"Memes"
+		check result end
+		imp_client.delete_at(1)
+		result:= imp_client.count=1 and imp_client.get_at (1)~"Memes"
+		check result end
 	end
 
 	test_assign_at : BOOLEAN
@@ -146,7 +150,7 @@ feature --initialization
 feature--Post-Condition Violations
 	test_insert_last_post_fail_1
 	local
-		imp_client: BAD_ARRAYED_CONTAINER
+		imp_client: BAD_INSERT_LAST
 	do
 		comment ("Post Condition fail 1: insert_last")
 		create imp_client.make

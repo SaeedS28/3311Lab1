@@ -29,10 +29,12 @@ feature--constructor
 		add_violation_case_with_tag ("inserted_at_i", agent test_insert_at_post_fail_1)
 		add_violation_case_with_tag ("others_unchanged", agent test_remove_first_post_fail_1)
 		add_violation_case_with_tag ("right_half_the_same", agent test_delete_at_post_fail_1)
+		add_violation_case_with_tag ("valid_index", agent test_most_valid_index_precondition_violations)
+		add_violation_case_with_tag ("not_empty", agent test_not_empty_precondition_violation)
 	end
 
 
-feature --initialization
+feature --normal tests
 	test_insert_last: BOOLEAN
 	local
 		a: STRING
@@ -192,5 +194,30 @@ feature--Post-Condition Violations
 		imp_client.insert_last ("an")
 		imp_client.insert_last ("ass")
 		imp_client.delete_at (3)
+	end
+
+feature --precondtion testing
+	test_most_valid_index_precondition_violations
+		-- Since most of the methods that have a require clause have valid_index for their preconditions, just going to test it once
+		-- to prove that all of their preconditions pass	
+	local
+		imp_client: ARRAYED_CONTAINER
+	do
+		comment ("Pre Condition fail: valid_index")
+		create imp_client.make
+		imp_client.insert_last ("Saad")
+		imp_client.insert_last ("is")
+		imp_client.insert_last ("an")
+		imp_client.insert_last ("ass")
+		imp_client.assign_at (5, "Dank")
+	end
+
+	test_not_empty_precondition_violation
+	local
+		imp_client: ARRAYED_CONTAINER
+	do
+		comment ("Pre Condition fail: not_empty")
+		create imp_client.make
+		imp_client.remove_first
 	end
 end

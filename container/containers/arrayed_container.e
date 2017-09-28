@@ -19,7 +19,7 @@ feature -- Constructors
 	make
 			-- Initialize an empty container.
 		do
-			-- This implementation is correct, just given to you.
+			-- This implementation is correct
 			create {ARRAY[STRING]} imp.make_empty
 		ensure
 			empty_container: imp.count=0
@@ -157,7 +157,7 @@ feature -- Commands
 	remove_first
 			-- Remove first element from the container.
 		require
-			not_empty: count /= 0
+			not_empty: count > 0
 		local
 			i: INTEGER
 --			s: STRING
